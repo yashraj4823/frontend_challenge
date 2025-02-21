@@ -11,7 +11,7 @@ function App() {
         e.preventDefault();
         try {
             const jsonInput = JSON.parse(input);
-            const res = await axios.post('https://bfhl-backend-cyan-nine.vercel.app/', { data: jsonInput.data });
+            const res = await axios.post('https://bfhl-kjgc.onrender.com/bfhl', { data: jsonInput.data });
             setResponse(res.data);
         } catch (error) {
             alert('Invalid JSON input');
