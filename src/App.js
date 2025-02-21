@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import "./App.css";
+import './App.css'; // Import the updated CSS file
 
 function App() {
     const [input, setInput] = useState('');
@@ -11,7 +11,7 @@ function App() {
         e.preventDefault();
         try {
             const jsonInput = JSON.parse(input);
-            const res = await axios.post('https://<your-backend-url>/bfhl', { data: jsonInput.data });
+            const res = await axios.post('https://bfhl-backend-cyan-nine.vercel.app/', { data: jsonInput.data });
             setResponse(res.data);
         } catch (error) {
             alert('Invalid JSON input');
@@ -40,7 +40,8 @@ function App() {
         }
 
         return (
-            <div>
+            <div className="response">
+                <h2>Filtered Response</h2>
                 {filteredResponse.numbers && <p>Numbers: {filteredResponse.numbers.join(', ')}</p>}
                 {filteredResponse.alphabets && <p>Alphabets: {filteredResponse.alphabets.join(', ')}</p>}
                 {filteredResponse.highest_alphabet && <p>Highest Alphabet: {filteredResponse.highest_alphabet.join(', ')}</p>}
@@ -49,31 +50,32 @@ function App() {
     };
 
     return (
-        <div>
-            <h1>API INPUT</h1> 
+        <div className="container">
+            <h1>API INPUT</h1> {/* Replace with your roll number */}
             <form onSubmit={handleSubmit}>
                 <textarea
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Enter JSON input"
+                    placeholder="Enter JSON input (e.g., { 'data': ['A', '1', 'B'] })"
                 />
                 <button type="submit">Submit</button>
             </form>
 
             {response && (
                 <div>
-                    <h2>Multi Filter</h2>
-                    <label>
-                        <input type="checkbox" value="numbers" onChange={handleFilterChange} /> Numbers
-                    </label>
-                    <label>
-                        <input type="checkbox" value="alphabets" onChange={handleFilterChange} /> Alphabets
-                    </label>
-                    <label>
-                        <input type="checkbox" value="highest_alphabet" onChange={handleFilterChange} /> Highest Alphabet
-                    </label>
+                    <div className="filters">
+                        <h2>Multi Filter</h2>
+                        <label>
+                            <input type="checkbox" value="numbers" onChange={handleFilterChange} /> Numbers
+                        </label>
+                        <label>
+                            <input type="checkbox" value="alphabets" onChange={handleFilterChange} /> Alphabets
+                        </label>
+                        <label>
+                            <input type="checkbox" value="highest_alphabet" onChange={handleFilterChange} /> Highest Alphabet
+                        </label>
+                    </div>
 
-                    <h2>Filtered Response</h2>
                     {renderFilteredResponse()}
                 </div>
             )}
